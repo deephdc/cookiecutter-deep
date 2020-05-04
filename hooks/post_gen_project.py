@@ -13,21 +13,25 @@
     Switches back to 'master'
 """
 import os
+import re
 import shutil
 import subprocess as subp
 import sys
 
-from cookiecutter.main import cookiecutter
-
-cookiecutter(
-    replay=True,
-    extra_context={'repo_name': '{{ cookiecutter.repo_name.lower().replace(' ', '_').replace('-','_') }}'}
-)
+REPO_REGEX = r'^[_a-zA-Z][_a-zA-Z0-9]+$'
 
 repo_name = '{{ cookiecutter.repo_name }}'
 deep_oc = 'DEEP-OC-{{ cookiecutter.repo_name }}'
 deep_oc_dir = os.path.join("../", deep_oc)
 src = os.path.join("../", repo_name, deep_oc)
+
+if not re.match(REPO_REGEX, repo_name):
+    print("[ERROR]: %s is not a valid Python module name!" % repo_name)
+    print("       Please, use low case and no dashes!")
+
+    # exits with status 1 to indicate failure
+    sys.exit(1)
+
 
 def git_ini(repo):
     """ Function
@@ -51,7 +55,7 @@ def git_ini(repo):
                 if "[![Build Status]" in line:
                     line = line.replace("/master)", "/test)")
                 readme_content.append(line)
-                
+
         with open("README.md", "w") as f_new:
             for line in readme_content:
                 f_new.write(line)
@@ -75,7 +79,7 @@ try:
     # initialized both git repositories
     git_user_app = git_ini(repo_name)
     git_deep_oc = git_ini(deep_oc)
-    
+
     if "Error" not in git_user_app and "Error" not in git_deep_oc:
         print()
         print("[Info] {} was created successfully,".format(repo_name))
