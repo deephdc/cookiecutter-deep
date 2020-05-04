@@ -18,7 +18,7 @@ import shutil
 import subprocess as subp
 import sys
 
-REPO_REGEX = r'^[_a-zA-Z][_a-zA-Z0-9]+$'
+REPO_REGEX = r'^[a-z][_a-z0-9]+$'
 
 repo_name = '{{ cookiecutter.repo_name }}'
 deep_oc = 'DEEP-OC-{{ cookiecutter.repo_name }}'
@@ -26,8 +26,9 @@ deep_oc_dir = os.path.join("../", deep_oc)
 src = os.path.join("../", repo_name, deep_oc)
 
 if not re.match(REPO_REGEX, repo_name):
-    print("[ERROR]: %s is not a valid Python module name!" % repo_name)
-    print("       Please, use low case and no dashes!")
+    print("")
+    print("[ERROR]: %s is not a valid Python package name!" % repo_name)
+    print("         Please, use low case and no dashes!")
 
     # exits with status 1 to indicate failure
     sys.exit(1)
