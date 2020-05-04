@@ -17,6 +17,13 @@ import shutil
 import subprocess as subp
 import sys
 
+from cookiecutter.main import cookiecutter
+
+cookiecutter(
+    replay=True,
+    extra_context={'repo_name': '{{ cookiecutter.repo_name.lower().replace(' ', '_').replace('-','_') }}'}
+)
+
 repo_name = '{{ cookiecutter.repo_name }}'
 deep_oc = 'DEEP-OC-{{ cookiecutter.repo_name }}'
 deep_oc_dir = os.path.join("../", deep_oc)
