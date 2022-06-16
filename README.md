@@ -1,46 +1,30 @@
-# Cookiecutter Data Science
+<div align="center">
+<img src="https://marketplace.deep-hybrid-datacloud.eu/images/logo-deep.png" alt="logo" width="300"/>
+</div>
 
-_A logical, reasonably standardized, but flexible project structure for doing and sharing data science work._
+# DEEP Modules Template
 
+This is the template for developing new modules in the DEEP Platform. It uses [Cookiecutter](https://cookiecutter.readthedocs.io) to generate the templates. This template is based on the CookieCutter [Datascience](http://drivendata.github.io/cookiecutter-data-science/) template.
 
-### [Original Project homepage](http://drivendata.github.io/cookiecutter-data-science/)
+There are two versions of this template:
+* [master](https://github.com/deephdc/cookiecutter-deep/tree/master): this is what 99% of users are probably looking for. Simple, minimal template, with the minimum requirements to integrate your code in DEEP.
+* [advanced](https://github.com/deephdc/cookiecutter-deep/tree/advanced): this is a more advanced template. It makes more assumptions on how to structure projects and adds more files than those strictly needed for integration. It also comes with additional files to implement tests (coverage, code quality, ...) on your module. Unless you are looking for one of these features, you are probably safer using master. This is the template that was used [originally](https://github.com/indigo-dc/cookiecutter-data-science) in the project.
 
-
-### Requirements to use the cookiecutter template:
------------
- - Python 2.7 or 3.5
- - [Cookiecutter Python package](http://cookiecutter.readthedocs.org/en/latest/installation.html) >= 1.4.0: This can be installed with pip by or conda depending on how you manage your Python packages:
-
+To create a new template of your project, install cookiecutter and run it with this template: 
 ``` bash
-$ pip install cookiecutter
+pip install cookiecutter
+cookiecutter https://github.com/deephdc/cookiecutter-deep.git --checkout advanced
 ```
 
-or
-
-``` bash
-$ conda config --add channels conda-forge
-$ conda install cookiecutter
-```
-
-
-### To start a new project, run:
-------------
-
-    cookiecutter https://github.com/indigo-dc/cookiecutter-data-science
-
-
-### The resulting directories
-------------
 Once you answer all the questions, two directories will be created:
- - DEEP-OC-<your_project>
- - <your_project>
+ - `DEEP-OC-<your_project>`: this is where the Docker container code goes
+ - `<your_project>`: this is where your module's code goes
 
-each directory is a git repository and has two branches: `master` and `test`.
-
-#### The directory structure of <your_project> looks like this: 
-------------
-
+Each directory is a git repository and has two branches: `master` and `test`.
+This is what the folder structures look like:
 ```
+<your_project>
+##############
 ├── LICENSE
 ├── README.md              <- The top-level README for developers using this project.
 ├── data
@@ -83,11 +67,9 @@ each directory is a git repository and has two branches: `master` and `test`.
 │       └── visualize.py
 │
 └── tox.ini                <- tox file with settings for running tox; see tox.testrun.org
-```
 
-#### The directory structure of DEEP-OC-<your_project> looks like this: 
-------------
-```
+DEEP-OC-<your_project>
+######################
 ├─ Dockerfile             Describes main steps on integrationg DEEPaaS API and
 │                         <your_project> application in one Docker image
 │
@@ -102,16 +84,6 @@ each directory is a git repository and has two branches: `master` and `test`.
 ├─ metadata.json          Defines information propagated to the [DEEP Open Catalog](https://marketplace.deep-hybrid-datacloud.eu)
 ```
 
-### Documentation
-------------
-More extended documentation can be found [here](http://docs.deep-hybrid-datacloud.eu/en/latest/user/overview/cookiecutter-template.html)
+More extended documentation can be found [here](http://docs.deep-hybrid-datacloud.eu/en/latest/user/overview/cookiecutter-template.html). If you want to look at a minimal app using this template structure check [demo_app](https://github.com/deephdc/DEEP-OC-demo_app) and [DEEP-OC-demo_app](https://github.com/deephdc/DEEP-OC-demo_app).
 
-### Installing development requirements
-------------
-
-    pip install -r requirements.txt
-
-### Running the tests
-------------
-
-    py.test tests
+Running the tests: `py.test tests`
