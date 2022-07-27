@@ -8,7 +8,7 @@ This is the template for developing new modules in the DEEP Platform. It uses [C
 
 There are two versions of this template:
 * [master](https://github.com/deephdc/cookiecutter-deep/tree/master): this is what 99% of users are probably looking for. Simple, minimal template, with the minimum requirements to integrate your code in DEEP.
-* [advanced](https://github.com/deephdc/cookiecutter-deep/tree/advanced): this is a more advanced template. It makes more assumptions on how to structure projects and adds more files than those strictly needed for integration. It also comes with additional files to implement tests (coverage, code quality, ...) on your module. Unless you are looking for one of these features, you are probably safer using master. This is the template that was used [originally](https://github.com/indigo-dc/cookiecutter-data-science) in the project.
+* [advanced](https://github.com/deephdc/cookiecutter-deep/tree/advanced): this is a more advanced template. It makes more assumptions on how to structure projects and adds more files than those strictly needed for integration. Unless you are looking for some specific feature, you are probably safer using master.
 
 To create a new template of your project, install cookiecutter and run it with this template: 
 ``` bash
@@ -70,18 +70,18 @@ This is what the folder structures look like:
 
 DEEP-OC-<your_project>
 ######################
-├─ Dockerfile             Describes main steps on integrationg DEEPaaS API and
+├── Dockerfile             Describes main steps on integrationg DEEPaaS API and
 │                         <your_project> application in one Docker image
 │
-├─ Jenkinsfile            Describes basic Jenkins CI/CD pipeline
+├── Jenkinsfile            Describes basic Jenkins CI/CD pipeline
 │
-├─ LICENSE                License file
+├──LICENSE                License file
 │
-├─ README.md              README for developers and users.
+├── README.md              README for developers and users.
 │
-├─ docker-compose.yml     Allows running the application with various configurations via docker-compose
+├── docker-compose.yml     Allows running the application with various configurations via docker-compose
 │
-├─ metadata.json          Defines information propagated to the [DEEP Open Catalog](https://marketplace.deep-hybrid-datacloud.eu)
+└── metadata.json          Defines information propagated to the [DEEP Open Catalog](https://marketplace.deep-hybrid-datacloud.eu)
 ```
 
 More extended documentation can be found [here](http://docs.deep-hybrid-datacloud.eu/en/latest/user/overview/cookiecutter-template.html). If you want to look at a minimal app using this template structure check [demo_app](https://github.com/deephdc/DEEP-OC-demo_app) and [DEEP-OC-demo_app](https://github.com/deephdc/DEEP-OC-demo_app).
