@@ -3,16 +3,16 @@ import unittest
 import {{ cookiecutter.repo_name }}.models.deep_api as deep_api
 
 class TestModelMethods(unittest.TestCase):
-    
+
     def setUp(self):
         self.meta = deep_api.get_metadata()
-        
+
     def test_model_metadata_type(self):
         """
         Test that get_metadata() returns dict
         """
         self.assertTrue(type(self.meta) is dict)
-        
+
     def test_model_metadata_values(self):
         """
         Test that get_metadata() returns right values (subset)
@@ -21,9 +21,7 @@ class TestModelMethods(unittest.TestCase):
                         '{{ cookiecutter.repo_name }}'.lower().replace('-','_'))
         self.assertEqual(self.meta['author'].lower(),
                          '{{ cookiecutter.author_name }}'.lower())
-        self.assertEqual(self.meta['author-email'].lower(),
-                         '{{ cookiecutter.author_email }}'.lower())
-        self.assertEqual(self.meta['license'].lower(), 
+        self.assertEqual(self.meta['license'].lower(),
                          '{{ cookiecutter.open_source_license }}'.lower())
 
 
