@@ -1,6 +1,6 @@
 {
     "git_base_url": "The project has to be hosted in a git repository. Please provide the corresponding URL, .e.g: https://github.com/deephdc : ",
-    "project_name": "A short name of your project. It will be added after \"git_base_url\" (see above)\n. The python package will also be named like that: ",
+    "project_name": "A short name of your project. It will be added after git repository URL (see above)\n. The python package will also be named like that: ",
     "author_name": "Author name(s) (and/or your organization/company/team). If many, please, separate by comma: ",
     "author_email": "E-Mail(s) of main author(s). If many, separate by comma: ",
     "description": "A short description of the project: ",
