@@ -24,5 +24,5 @@
     "[Info] failure_notify - Receive an email if module build fails [no/yes]": "Press Enter and configure",
     "failure_notify": ["no", "yes"],
     
-    "__repo_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-','_') }}",
+    "__repo_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-','_') }}"
 }
