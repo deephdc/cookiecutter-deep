@@ -3,7 +3,6 @@
     "git_base_url": "https://github.com/deephdc",
     "[Info] project_name - Short name of your project. It also defines name of the repository, which will be added after \"git_base_url\" (see above)\n": "Press Enter and configure",
     "project_name": "",
-    "__repo_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-','_') }}",
     "[Info] author_name - Author name(s) (and/or your organization/company/team). If many, separate by comma": "Press Enter and configure",
     "author_name": "",
     "[Info] author_email - E-Mail(s) of main author(s). If many, separate by comma": "Press Enter and configure",
@@ -23,5 +22,7 @@
     "[Info] baseimage_gpu_tag - GPU tag for the baseimage, e.g. 2.9.1-gpu. Has to match python3!": "Press Enter and configure",
     "baseimage_gpu_tag": "2.9.1-gpu",
     "[Info] failure_notify - Receive an email if module build fails [no/yes]": "Press Enter and configure",
-    "failure_notify": ["no", "yes"]
+    "failure_notify": ["no", "yes"],
+    
+    "__repo_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-','_') }}",
 }
