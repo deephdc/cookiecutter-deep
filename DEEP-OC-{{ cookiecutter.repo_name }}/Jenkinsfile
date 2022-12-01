@@ -9,8 +9,8 @@ pipeline {
 
     environment {
         dockerhub_repo = "deephdc/{{ cookiecutter.__deephdc_docker.lower() }}"
-        base_cpu_tag = "{{ cookiecutter.baseimage_cpu_tag }}"
-        base_gpu_tag = "{{ cookiecutter.baseimage_gpu_tag }}"
+        base_cpu_tag = "{{ cookiecutter.__baseimage_cpu_tag }}"
+        base_gpu_tag = "{{ cookiecutter.__baseimage_gpu_tag }}"
     }
 
     stages {
@@ -45,8 +45,7 @@ pipeline {
                            // CPU (aka latest, i.e. default)
                            id_cpu = DockerBuild(id,
                                             tag: ['latest', 'cpu'],
-                                            build_args: ["tag=${env.base_cpu_tag}",
-                                                         "branch=master"])
+                                            build_args: ["tag=${env.base_cpu_tag}"])
 
                            // Check that the image starts and get_metadata responses correctly
                            sh "bash ../check_oc_artifact/check_artifact.sh ${env.dockerhub_repo}"
@@ -54,16 +53,14 @@ pipeline {
                            // GPU
                            id_gpu = DockerBuild(id,
                                             tag: ['gpu'],
-                                            build_args: ["tag=${env.base_gpu_tag}",
-                                                         "branch=master"])
+                                            build_args: ["tag=${env.base_gpu_tag}"])
                         }
 
                         if (env.BRANCH_NAME == 'test') {
                            // CPU
                            id_cpu = DockerBuild(id,
                                             tag: ['test', 'cpu-test'],
-                                            build_args: ["tag=${env.base_cpu_tag}",
-                                                         "branch=test"])
+                                            build_args: ["tag=${env.base_cpu_tag}-test"])
 
                            // Check that the image starts and get_metadata responses correctly
                            sh "bash ../check_oc_artifact/check_artifact.sh ${env.dockerhub_repo}:test"
@@ -71,8 +68,7 @@ pipeline {
                            // GPU
                            id_gpu = DockerBuild(id,
                                             tag: ['gpu-test'],
-                                            build_args: ["tag=${env.base_gpu_tag}",
-                                                         "branch=test"])
+                                            build_args: ["tag=${env.base_gpu_tag}-test"])
                         }
                     }
                 }

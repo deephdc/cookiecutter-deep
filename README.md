@@ -8,47 +8,22 @@ This is the template for developing new modules in the DEEP Platform. It uses [C
 
 There are two versions of this template:
 * [master](https://github.com/deephdc/cookiecutter-deep/tree/master): this is what 99% of users are probably looking for. Simple, minimal template, with the minimum requirements to integrate your code in DEEP.
+* [child-module](https://github.com/deephdc/cookiecutter-deep/tree/child-module): this is a fork of the `master` branch specifically tailored to users performing a retraining of an existing module. It only creates a Docker repo whose container is based on an existing module's Docker image.
 * [advanced](https://github.com/deephdc/cookiecutter-deep/tree/advanced): this is a more advanced template. It makes more assumptions on how to structure projects and adds more files than those strictly needed for integration. Unless you are looking for some specific feature, you are probably safer using master.
 
 To create a new template of your project, install cookiecutter and run it with this template: 
 ``` bash
 pip install cookiecutter
-cookiecutter https://github.com/deephdc/cookiecutter-deep.git --checkout master
+cookiecutter https://github.com/deephdc/cookiecutter-deep.git --checkout child-module
 ```
 
-Once you answer all the questions, two directories will be created:
+Once you answer all the questions, one directory will be created:
  - `DEEP-OC-<your_project>`: this is where the Docker container code goes
- - `<your_project>`: this is where your module's code goes
 
-Each directory is a git repository and has two branches: `master` and `test`.
+The directory is a git repository and has two branches: `master` and `test`.
 This is what the folder structures look like:
 
 ```
-<your_project>
-##############
-├── LICENSE                <- License file
-│
-├── README.md              <- The top-level README for developers using this project.
-│
-├── requirements.txt       <- The requirements file for reproducing the analysis environment, e.g.
-│                             generated with `pip freeze > requirements.txt`
-│
-├── setup.py, setup.cfg    <- makes project pip installable (pip install -e .) so
-│                             {{cookiecutter.repo_name}} can be imported
-│
-├── {{cookiecutter.repo_name}}    <- Source code for use in this project.
-│   │
-│   ├── __init__.py        <- Makes {{cookiecutter.repo_name}} a Python module
-│   │
-│   ├── api.py             <- Main script for the integration with DEEP API
-│   │
-│   ├── misc.py            <- Misc functions that were helpful accross projects
-│   │
-│   └── tests              <- Scripts to perfrom code testing
-│
-└── Jenkinsfile            <- Describes basic Jenkins CI/CD pipeline
-
-
 DEEP-OC-<your_project>
 ######################
 ├─ Dockerfile             <- Describes main steps on integration of DEEPaaS API and
