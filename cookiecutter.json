@@ -1,6 +1,6 @@
 {
-    "[Info] docker_baseimage - Which DEEP module do you wish to inherit from?": "Press Enter and configure",
-    "docker_baseimage": "image-classification-tf",
+    "[Info] docker_baseimage - Which DEEP module do you wish to inherit from? \n       Check available modules at https://hub.docker.com/u/deephdc": "Press Enter and configure",
+    "docker_baseimage": "deep-oc-image-classification-tf",
     "[Info] git_base_url - Remote URL to host your new repositories (git), e.g.\n       https://github.com/deephdc (i.e. at github)\n       https://git.scc.kit.edu/deep (or somewhere else)": "Press Enter and configure",
     "git_base_url": "https://github.com/deephdc",
     "[Info] project_name - Short name of your project": "Press Enter and configure",
