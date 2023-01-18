@@ -49,9 +49,9 @@ This is what the folder structures look like:
 │                             generated with `pip freeze > requirements.txt`
 ├── test-requirements.txt  <- The requirements file for the test environment
 │
-├── setup.py               <- makes project pip installable (pip install -e .) so {{cookiecutter.repo_name}} can be imported
-├── {{cookiecutter.repo_name}}    <- Source code for use in this project.
-│   ├── __init__.py        <- Makes {{cookiecutter.repo_name}} a Python module
+├── setup.py               <- makes project pip installable (pip install -e .) so {{cookiecutter.__repo_name}} can be imported
+├── {{cookiecutter.__repo_name}}    <- Source code for use in this project.
+│   ├── __init__.py        <- Makes {{cookiecutter.__repo_name}} a Python module
 │   │
 │   ├── dataset            <- Scripts to download or generate data
 │   │   └── make_dataset.py
@@ -60,7 +60,7 @@ This is what the folder structures look like:
 │   │   └── build_features.py
 │   │
 │   ├── models             <- Scripts to train models and make predictions
-│   │   └── deep_api.py    <- Main script for the integration with DEEP API
+│   │   └── api.py         <- Main script for the integration with DEEP API
 │   │
 │   ├── tests              <- Scripts to perfrom code testing
 │   │
@@ -76,7 +76,7 @@ DEEP-OC-<your_project>
 │
 ├── Jenkinsfile            Describes basic Jenkins CI/CD pipeline
 │
-├──LICENSE                License file
+├── LICENSE                License file
 │
 ├── README.md              README for developers and users.
 │
