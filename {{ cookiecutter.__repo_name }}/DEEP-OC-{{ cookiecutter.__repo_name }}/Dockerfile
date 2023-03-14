@@ -37,7 +37,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         gcc \
         git \
         curl \
-        python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Update python packages
