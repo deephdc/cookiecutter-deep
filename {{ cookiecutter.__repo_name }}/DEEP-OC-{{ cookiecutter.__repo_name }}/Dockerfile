@@ -69,9 +69,6 @@ RUN curl -sS  http://get.onedata.org/oneclient-1902.sh  | bash -s -- oneclient="
     mkdir -p /mnt/onedata && \
     rm -rf /var/lib/apt/lists/*
 
-# Install DEEPaaS from source until 2.1 release is made to PyPi
-RUN pip3 install --no-cache-dir --upgrade git+https://github.com/indigo-dc/deepaas.git@master
-
 # Disable FLAAT authentication by default
 ENV DISABLE_AUTHENTICATION_AND_ASSUME_AUTHENTICATED_USER yes
 
