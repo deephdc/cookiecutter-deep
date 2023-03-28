@@ -21,9 +21,9 @@ repo_name = '{{ cookiecutter.__repo_name }}'
 
 if (not re.match(MODULE_REGEX, repo_name) or
     len(repo_name) < 2):
-    raise ValueError('%s is not a valid Python module name!\
+    raise ValueError('\'%s\' is not a valid Python module name! \
 Please, check the \"project_name\" input' % repo_name)
-#    print('%s is not a valid Python module name!\
+#    print('\'%s\' is not a valid Python module name! \
 #Please, check the \"project_name\" input' % repo_name)
 #    sys.exit(1)
 
