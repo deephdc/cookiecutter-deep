@@ -31,11 +31,12 @@ ARG jlab=true
 ARG oneclient_ver=19.02.0.rc2-1~bionic
 
 # Install Ubuntu packages
+# - gcc is needed in Pytorch images because deepaas installation might break otherwise (see docs) (it is already installed in tensorflow images)
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get install -y --no-install-recommends \
+        gcc \
         git \
         curl \
-        python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 # Update python packages
@@ -67,9 +68,6 @@ ENV RCLONE_CONFIG=/srv/.rclone/rclone.conf
 RUN curl -sS  http://get.onedata.org/oneclient-1902.sh  | bash -s -- oneclient="$oneclient_ver" && \
     mkdir -p /mnt/onedata && \
     rm -rf /var/lib/apt/lists/*
-
-# Install DEEPaaS from source until 2.1 release is made to PyPi
-RUN pip3 install --no-cache-dir --upgrade git+https://github.com/indigo-dc/deepaas.git@master
 
 # Disable FLAAT authentication by default
 ENV DISABLE_AUTHENTICATION_AND_ASSUME_AUTHENTICATED_USER yes
