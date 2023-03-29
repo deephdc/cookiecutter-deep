@@ -6,11 +6,11 @@
 # Please, see the LICENSE file
 
 """ 
-    Post-hook script
-    Moves DEEP-OC-{{ cookiecutter.__repo_name }} directory one level up.
-    Initialized Git repositories
-    Creates 'test' branch
-    Switches back to 'master'
+    Post-hook script:
+    1. Moves DEEP-OC-{{ cookiecutter.__repo_name }} directory one level up.
+    2. Initialized Git repositories
+    3. Creates 'test' branch
+    4. Switches back to 'master'
 """
 import os
 import re
@@ -98,3 +98,4 @@ except OSError as os_error:
          repository an error occurred! '
     )
     sys.stdout.write('Error! {} '.format(os_error))
+    sys.exit(1)
