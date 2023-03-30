@@ -5,69 +5,60 @@
 # This code is distributed under the MIT License
 # Please, see the LICENSE file
 
-"""
+""" 
     Post-hook script:
     1. Moves DEEP-OC-{{ cookiecutter.__repo_name }} directory one level up.
-    2. Initialized Git repositories
+    2. Initialises git repositories
     3. Creates 'master', 'test' branches
     4. Switches back to 'master'
-
-    NB: Check for the correct repo_name happens in "pre_gen_project.py" hook!
+    
+    NB: Check for the correct git_base_url (valid URL) and repo_name 
+        happens in "pre_gen_project.py" hook!
 """
-import logging
+
 import os
 import shutil
 import subprocess as subp
 import sys
 
-# conigure python logger
-logger = logging.getLogger('pre_gen_project.py')
-logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s')
 
 repo_name = '{{ cookiecutter.__repo_name }}'
 deep_oc = 'DEEP-OC-{{ cookiecutter.__repo_name }}'
 deep_oc_dir = os.path.join("../", deep_oc)
 src = os.path.join("../", repo_name, deep_oc)
 
-
 def git_ini(repo):
-    """ Function
-        Initializes Git repository
+    """ Function to initialise git repositories
     """
     gitrepo = os.path.join('{{ cookiecutter.git_base_url }}',
                            repo + '.git')
-    try:
-        os.chdir("../" + repo)
-        subp.call(["git", "init"])
-        subp.call(["git", "add", "."])
-        subp.call(["git", "commit", "-m", "initial commit"])
-        subp.call(["git", "remote", "add", "origin", gitrepo])
 
-        # create test branch automatically
-        subp.call(["git", "checkout", "-b", "test"])
-        # adjust [Build Status] for the test branch
-        readme_content=[]
-        with open("README.md") as f_old:
-            for line in f_old:
-                if "[![Build Status]" in line:
-                    line = line.replace("/master)", "/test)")
-                readme_content.append(line)
+    os.chdir(os.path.join("../", repo))
+    subp.call(["git", "init"])
+    subp.call(["git", "add", "."])
+    subp.call(["git", "commit", "-m", "initial commit"])
+    subp.call(["git", "remote", "add", "origin", gitrepo])
 
-        with open("README.md", "w") as f_new:
-            for line in readme_content:
-                f_new.write(line)
+    # create test branch automatically
+    subp.call(["git", "checkout", "-b", "test"])
+    # adjust [Build Status] for the test branch
+    readme_content=[]
+    with open("README.md") as f_old:
+        for line in f_old:
+            if "[![Build Status]" in line:
+                line = line.replace("/master)", "/test)")
+            readme_content.append(line)
 
-        subp.call(["git", "commit", "-a", "-m", "update README.md for the BuildStatus"])
+    with open("README.md", "w") as f_new:
+        for line in readme_content:
+            f_new.write(line)
 
-        # switch back to master
-        subp.call(["git", "checkout", "master"])
-    except OSError as os_error:
-        message = ("Creating git repository failed " +
-                   "for {} ! ({})".format(repo, os_error))
-        logger.exception(message)
-        return "Error"
-    else:
-        return gitrepo
+    subp.call(["git", "commit", "-a", "-m", "update README.md for the BuildStatus"])
+
+    # switch back to master
+    subp.call(["git", "checkout", "master"])
+
+    return gitrepo
 
 
 try:
@@ -78,8 +69,8 @@ try:
     git_user_app = git_ini(repo_name)
     git_deep_oc = git_ini(deep_oc)
 
-    if "Error" not in git_user_app and "Error" not in git_deep_oc:
-        message = F"""
+    message = F"""
+------ SUCCESS ------
 [Info] {repo_name} was created successfully,
        Don't forget to create corresponding remote repository: {git_user_app}
        then you can do 'git push origin --all'")
@@ -87,10 +78,16 @@ try:
 [Info] {deep_oc} was created successfully,
        Don't forget to create corresponding remote repository: {git_deep_oc}
        then you can do 'git push origin --all'"""
-        print(message)
-    sys.exit(0)
+
+    print(message)
+
 except OSError as os_error:
-    message = ("While attempting to move {} and create ".format(src) +
-               "git repository an error ({}) occurred!".format(os_error))
-    logger.exception(message)
-    sys.exit(1)
+    message = (F"While attempting to move {src} and create git repository " +
+               F"an error ({os_error}) occurred!")
+    print("[ERROR]: " + message)
+    sys.exit(message)
+
+except Exception as e:
+    message = F"Something went wrong: {repr(e)}"
+    print("[ERROR]: " + message)
+    sys.exit(message)

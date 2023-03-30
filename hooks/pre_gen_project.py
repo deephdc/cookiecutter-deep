@@ -7,25 +7,23 @@
 
 """
     Pre-hook script
-    Checks that {{ cookiecutter.__repo_name }}:
-    1. is not too short (has to be more than one character)
-    2. has valid characters
+    1. Check that {{ cookiecutter.git_base_url}} is a valid URL
+    2. Check that {{ cookiecutter.__repo_name }}:
+      a. is not too short (has to be more than one character)
+      b. has characters valid for python
 """
 
-import logging
 import re
 import sys
 from urllib.parse import urlparse
 
-# init array of errors, must init with 0
-errors = [0]
-
-# conigure python logger
-logger = logging.getLogger('pre_gen_project.py')
-logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s')
+# init error_messages
+error = False
+error_messages = []
 
 # check {{ cookiecutter.git_base_url}}
 def check_url(url):
+    """Function to check URL"""
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
@@ -36,8 +34,9 @@ git_base_url = '{{ cookiecutter.git_base_url}}'
 if (not check_url(git_base_url)):
     message = ("'{}' is not a valid URL! ".format(git_base_url) +
                "Please, check the 'git_base_url' input")
-    logger.error(message)
-    errors.append(1)
+    print("[ERROR]: " + message)
+    error = True
+    error_messages.append(message)
 
 # check {{ cookiecutter.__repo_name }}
 MODULE_REGEX = r'^[_a-zA-Z][_a-zA-Z0-9]+$'
@@ -46,9 +45,9 @@ if (not re.match(MODULE_REGEX, repo_name) or
     len(repo_name) < 2):
     message = ("'{}' is not a valid Python module name! ".format(repo_name) +
                "Please, check the 'project_name' input")
-    logger.error(message)
-    errors.append(1)
+    print("[ERROR]: " + message)
+    error = True
+    error_messages.append(message)
 
-print(F"errors: {errors}")
-if sum(errors) > 0:
-    sys.exit(1)
+if error:
+    sys.exit("; ".join(error_messages))
