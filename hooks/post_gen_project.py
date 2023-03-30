@@ -5,41 +5,37 @@
 # This code is distributed under the MIT License
 # Please, see the LICENSE file
 
-""" 
+"""
     Post-hook script:
     1. Moves DEEP-OC-{{ cookiecutter.__repo_name }} directory one level up.
     2. Initialized Git repositories
-    3. Creates 'test' branch
+    3. Creates 'master', 'test' branches
     4. Switches back to 'master'
+
+    NB: Check for the correct repo_name happens in "pre_gen_project.py" hook!
 """
+import logging
 import os
-import re
 import shutil
 import subprocess as subp
 import sys
 
-REPO_REGEX = r'^[a-z][_a-z0-9]+$'
+# conigure python logger
+logger = logging.getLogger('pre_gen_project.py')
+logging.basicConfig(format='%(asctime)s [%(levelname)s]: %(message)s')
 
 repo_name = '{{ cookiecutter.__repo_name }}'
 deep_oc = 'DEEP-OC-{{ cookiecutter.__repo_name }}'
 deep_oc_dir = os.path.join("../", deep_oc)
 src = os.path.join("../", repo_name, deep_oc)
 
-if not re.match(REPO_REGEX, repo_name):
-    print("")
-    print("[ERROR]: %s is not a valid Python package name!" % repo_name)
-    print("         Please, use low case and no dashes!")
-
-    # exits with status 1 to indicate failure
-    sys.exit(1)
-
 
 def git_ini(repo):
     """ Function
         Initializes Git repository
     """
-    gitrepo = ('{{ cookiecutter.git_base_url }}'.rstrip('/')
-                + "/" +  repo + '.git')
+    gitrepo = os.path.join('{{ cookiecutter.git_base_url }}',
+                           repo + '.git')
     try:
         os.chdir("../" + repo)
         subp.call(["git", "init"])
@@ -66,8 +62,9 @@ def git_ini(repo):
         # switch back to master
         subp.call(["git", "checkout", "master"])
     except OSError as os_error:
-        sys.stdout.write('[Error] Creating git repository failed for ' + repo + " !")
-        sys.stdout.write('[Error] {} '.format(os_error))
+        message = ("Creating git repository failed " +
+                   "for {} ! ({})".format(repo, os_error))
+        logger.exception(message)
         return "Error"
     else:
         return gitrepo
@@ -82,20 +79,18 @@ try:
     git_deep_oc = git_ini(deep_oc)
 
     if "Error" not in git_user_app and "Error" not in git_deep_oc:
-        print()
-        print("[Info] {} was created successfully,".format(repo_name))
-        print("       Don't forget to create corresponding remote repository: {}".format(git_user_app))
-        print("       then you can do 'git push origin --all'")
-        print()
-        print("[Info] {} was created successfully,".format(deep_oc))
-        print("       Don't forget to create corresponding remote repository: {}".format(git_deep_oc))
-        print("       then you can do 'git push origin --all'")
+        message = F"""
+[Info] {repo_name} was created successfully,
+       Don't forget to create corresponding remote repository: {git_user_app}
+       then you can do 'git push origin --all'")
 
+[Info] {deep_oc} was created successfully,
+       Don't forget to create corresponding remote repository: {git_deep_oc}
+       then you can do 'git push origin --all'"""
+        print(message)
     sys.exit(0)
 except OSError as os_error:
-    sys.stdout.write(
-        'While attempting to move '+ src +' and create git \
-         repository an error occurred! '
-    )
-    sys.stdout.write('Error! {} '.format(os_error))
+    message = ("While attempting to move {} and create ".format(src) +
+               "git repository an error ({}) occurred!".format(os_error))
+    logger.exception(message)
     sys.exit(1)
