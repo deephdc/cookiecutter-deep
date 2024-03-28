@@ -1,3 +1,12 @@
+---
+# The Repository is ARCHIVED!
+### it is now maintained in:
+
+* https://github.com/ai4os/ai4-template     - "main" template
+* https://github.com/ai4os/ai4-template-adv - advanced template
+* https://github.com/ai4os/ai4-template-child - child-module template
+---
+
 <div align="center">
 <img src="https://marketplace.deep-hybrid-datacloud.eu/images/logo-deep.png" alt="logo" width="300"/>
 </div>
