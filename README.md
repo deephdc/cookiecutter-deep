@@ -1,6 +1,6 @@
 ---
 # The Repository is ARCHIVED!
-### it is now maintained in:
+### it is now maintained in
 
 * https://github.com/ai4os/ai4-template     - "main" template
 * https://github.com/ai4os/ai4-template-adv - advanced template
