@@ -2,9 +2,12 @@
 # The Repository is ARCHIVED!
 ### it is now maintained in
 
-* https://github.com/ai4os/ai4-template     - "main" template
-* https://github.com/ai4os/ai4-template-adv - advanced template
-* https://github.com/ai4os/ai4-template-child - child-module template
+<ul>
+<li>https://github.com/ai4os/ai4-template     - "main" template
+<li>https://github.com/ai4os/ai4-template-adv - advanced template
+<li>https://github.com/ai4os/ai4-template-child - child-module template
+</ul>
+
 ---
 
 <div align="center">
